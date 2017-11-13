@@ -2,10 +2,13 @@
 name = "cose-c"
 version = "0.1.0"
 authors = ["Franziskus Kiefer <franziskuskiefer@gmail.com>"]
+repository = "https://github.com/franziskuskiefer/cose-c-api"
+keywords = ["cose", "jose", "cbor"]
+license = "MPL-2.0"
 
 [dependencies]
-# cose = "0.1"
-cose = { path = "../cose-rust/" }
+cose = "0.1"
+# cose = { path = "../cose-rust/" }
 
 [lib]
 name = "cosec"
