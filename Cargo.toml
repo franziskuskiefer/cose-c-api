@@ -1,0 +1,13 @@
+[package]
+name = "cose-c"
+version = "0.1.0"
+authors = ["Franziskus Kiefer <franziskuskiefer@gmail.com>"]
+
+[dependencies]
+# cose = "0.1"
+cose = { path = "../cose-rust/" }
+
+[lib]
+name = "cosec"
+path = "src/lib.rs"
+crate-type = ["dylib"]
