@@ -2,6 +2,7 @@
 name = "cose-c"
 version = "0.1.0"
 authors = ["Franziskus Kiefer <franziskuskiefer@gmail.com>"]
+description = "C API for the cose crate"
 repository = "https://github.com/franziskuskiefer/cose-c-api"
 keywords = ["cose", "jose", "cbor"]
 license = "MPL-2.0"
