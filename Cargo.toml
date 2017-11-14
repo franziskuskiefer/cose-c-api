@@ -13,4 +13,3 @@ cose = "0.1"
 [lib]
 name = "cosec"
 path = "src/lib.rs"
-crate-type = ["dylib"]
