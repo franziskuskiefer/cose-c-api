@@ -43,7 +43,7 @@ pub extern "C" fn verify_cose_signature_ffi(
     let cose_signature = unsafe { from_raw(cose_signature, cose_signature_len) };
 
     // Parse the incoming signature.
-    let cose_signatures = decode_signature(cose_signature, &payload);
+    let cose_signatures = decode_signature(&cose_signature, &payload);
     let cose_signatures = match cose_signatures {
         Ok(signatures) => signatures,
         Err(_) => Vec::new(),
