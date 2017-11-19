@@ -52,7 +52,6 @@ pub extern "C" fn verify_cose_signature_ffi(
         return false;
     }
 
-    // for cose_signature in cose_signatures {
     return cose_signatures.into_iter().all(|cose_signature| {
         let signature_type = cose_signature.signature_type;
         // ES256 = 0, ES384 = 1, ES512 = 2, PS256 = 3

@@ -1,6 +1,6 @@
 [package]
 name = "cose-c"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Franziskus Kiefer <franziskuskiefer@gmail.com>"]
 description = "C API for the cose crate"
 repository = "https://github.com/franziskuskiefer/cose-c-api"
@@ -9,7 +9,6 @@ license = "MPL-2.0"
 
 [dependencies]
 cose = "0.1"
-# cose = { path = "../cose-rust/" }
 
 [lib]
 name = "cosec"
