@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 extern crate cose;
 
 use std::slice;
@@ -39,17 +43,16 @@ pub extern "C" fn verify_cose_signature_ffi(
     let cose_signature = unsafe { from_raw(cose_signature, cose_signature_len) };
 
     // Parse the incoming signature.
-    let cose_signatures = decode_signature(cose_signature, &payload);
+    let cose_signatures = decode_signature(&cose_signature, &payload);
     let cose_signatures = match cose_signatures {
-        Ok(signature) => signature,
+        Ok(signatures) => signatures,
         Err(_) => Vec::new(),
     };
-    if cose_signatures.len() < 1 {
+    if cose_signatures.len() == 0 {
         return false;
     }
 
-    let mut result = true;
-    for cose_signature in cose_signatures {
+    return cose_signatures.into_iter().all(|cose_signature| {
         let signature_type = cose_signature.signature_type;
         // ES256 = 0, ES384 = 1, ES512 = 2, PS256 = 3
         let signature_type = match signature_type {
@@ -62,15 +65,11 @@ pub extern "C" fn verify_cose_signature_ffi(
         let real_payload = cose_signature.to_verify;
 
         // Build cert chain params.
-        let mut cert_lens: Vec<usize> = Vec::new();
-        let mut certs: Vec<*const u8> = Vec::new();
-        for cert in &cose_signature.certs {
-            cert_lens.push(cert.len());
-            certs.push(cert.as_ptr());
-        }
+        let certs: Vec<_> = cose_signature.certs.iter().map(|c| c.as_ptr()).collect();
+        let cert_lens: Vec<_> = cose_signature.certs.iter().map(|c| c.len()).collect();
 
         // Call callback to verify the parsed signatures.
-        result &= verify_callback(
+        verify_callback(
             real_payload.as_ptr(),
             real_payload.len(),
             certs.as_ptr(),
@@ -81,13 +80,6 @@ pub extern "C" fn verify_cose_signature_ffi(
             signature_bytes.as_ptr(),
             signature_bytes.len(),
             signature_type,
-        );
-
-        // We can stop early. The cose_signature is not valid.
-        if !result {
-            return result;
-        }
-    }
-
-    result
+        )
+    });
 }
