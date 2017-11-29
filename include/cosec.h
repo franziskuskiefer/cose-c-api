@@ -22,7 +22,8 @@ typedef bool (*cose_verify_callback)(const uint8_t* payload,
                                      size_t ee_cert_len,
                                      const uint8_t* signature,
                                      size_t signature_len,
-                                     uint8_t algorithm);
+                                     uint8_t algorithm,
+                                     void* ctx);
 bool
 verify_cose_signature_ffi(const uint8_t* payload,
                           size_t payload_len,
