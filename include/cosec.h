@@ -29,5 +29,6 @@ verify_cose_signature_ffi(const uint8_t* payload,
                           size_t payload_len,
                           const uint8_t* signature,
                           size_t signature_len,
+                          void* ctx,
                           cose_verify_callback);
 }
